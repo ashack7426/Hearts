@@ -7,7 +7,6 @@ import numpy as np
 from math import comb, fabs
 from constants import *
 import copy
-import pygame
 
 
 class Board:
@@ -893,36 +892,6 @@ class Board:
             self.__playerTurn = (self.__playerTurn + 1) % 4
 
         return False
-
-    def showRankings(self, final, screen):
-        screen.fill(WHITE)
-
-        text = "Current Rankings:"
-
-        if final:
-            text = "Final Rankings:"
-
-        myfont = pygame.font.SysFont('Comic Sans MS', 30)
-        textsurface = myfont.render(text, False, BLACK)
-        screen.blit(textsurface, (0, 0))
-
-        rank = sorted(self.getPlayers())
-
-        num = SIZE / 5
-
-        for p in rank:
-            text = 'Player ' + str(p.getNumber()) + \
-                ': ' + str(p.getCurrentScore())
-            textsurface = myfont.render(text, False, BLACK)
-            screen.blit(textsurface, (0, num))
-
-        pygame.display.update()
-        pygame.display.flip()
-
-    def showBoard(self, screen):
-        screen.fill(WHITE)
-
-        pygame.display.update()
 
     def showGame(self):
         first_player = self.getPlayerTurn()

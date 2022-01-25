@@ -1,4 +1,4 @@
-import pygame
+
 from constants import *
 
 
@@ -74,27 +74,3 @@ class Card:
 
     def __lt__(self, other):
         return self._getRankIndex() < other._getRankIndex()
-
-    """ def render(self, win, x, y):
-        # Width and height need to be determined by screen size
-        # lets do 3 to 2 so length of card is 3 and width is 2
-        # the width of screen = 13 * card_width + 2 * card length
-        # height of screen = 13 * card_width + 2 * card length
-        # Screen is a box
-        # 3/2 = card_length / card_width => card_length = 3/2 * card_width
-        # Box size = 13 * card_Width + 3 * card_width = 16 * card width
-        # card_Width = Box size / 16
-        # card_length = card_width * 3/2 = 3/2 * (Box Size / 16) = 3 * BoxSize / 32
-        font = pygame.font.Font(None, 25)
-        color = None
-
-        if self.__suit == 'H' or self.__suit == 'D':
-            color = RED
-        else:
-            color = BLACK
-
-        text = font.render(str(self), True, color)
-        card_width = SIZE / 16
-        card_length = 3 * SIZE / 32
-        #pygame.draw.rect(win, WHITE, (x, y, card_width, card_length))
-        win.blit(text, ((x + card_width) / 2, (y + card_length) / 2)) """

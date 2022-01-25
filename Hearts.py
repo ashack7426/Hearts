@@ -4,7 +4,6 @@ import random
 import numpy as np
 from tensorflow import keras
 import copy
-import pygame
 
 from constants import SIZE, WHITE
 
@@ -170,13 +169,8 @@ def chooseSettings():
 def playGame():
     board = chooseSettings()
     play = True
-    pygame.init()
-    win = pygame.display.set_mode([SIZE, SIZE])
-    win.fill(WHITE)
-    pygame.display.set_caption('Hearts')
 
     while play:
-        pygame.display.update()
         b = copy.deepcopy(board)
 
         while not b.gameOver():
@@ -338,7 +332,6 @@ def playGame():
             # Finish the Round
             round_over = False
             while not round_over:
-                b.showBoard(win)
                 turn = b.getPlayerTurn()
                 p = b.getPlayers()[turn]
                 print('Player ' + str(p.getNumber()) + ' turn:')
@@ -392,7 +385,6 @@ def playGame():
                     round_over = b.playCard(a)
 
             if not b.gameOver():
-                b.showRankings(0, win)  # show current rankings
                 for i in range(4):
                     p = b.getPlayers()[i]
                     hand = copy.deepcopy(board.getPlayers()[i].getHand())
@@ -403,8 +395,6 @@ def playGame():
         for p in rankedPlayers:
             print(str(p))
 
-        b.showRankings(1, win)  # show final rankings
-
         choice = int(
             input('Do you want to play again(1), adjust settings(2), or quit(3): '))
 
@@ -412,7 +402,6 @@ def playGame():
             board = chooseSettings()
         elif choice == 3:
             play = False
-            pygame.quit()
         else:
             random.shuffle(board.getDeck())
 
@@ -423,58 +412,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-# Tests
-# 4 normals (good) (done)
-# 1 weird and 3 normals (good) (done)
-# (2 weird humans + 2 normals) (good) (done)
-# (3 weird humans 1 human) (good) (done)
-# 4 weird humans (good) (done)
-
-# 4 computers (good) (done)
-# 3 computers + (1 normal or 1 weird) (good) (done)
-# 2 computers + (2 normal or 2 weird or 1 of each) (nope)
-# 1 computer + (1 normal & 2 weird or 2 normal & 1 weird or 3 normal or 3 weird) (nope)
-
-# Make sure the scores add up to 26 where are the hearts ?
-# add comments and organize
-# post to git
-
-
-# Play the game
-
-# The pygame will just have these settings the toggle and a pass number at the start
-
-# Players will see the valid cards
-
-
-# Get this whole setup in the console then just add a gui to it
-
-
-# The settings shoulh have 4 players
-
-# Each player is either a human or computer
-# If a player is a human then you can check ythe option of show hand or not
-# This is meant so that if i am playing against malone or something then I can manually type in my cards
-# If its a human and its show hand then before the game starts the human show players need to
-# type in what their hands are at the start
-
-# The other one is computer with 5 different diffculties
-
-
-# At the start of each round I can also change the pass, the default will be the order but just in case it can change
-
-
-# Min MC - 80% 4th, 10% 2nd, and 10% 3rd
-# Random - 25 % win rate
-# Bot - 41% 1st, 28 %second, 21% third, 10% 4th
-# Max MC - 95 % win rate 5% second place
-
-# Test bots and make guis
-# Computer Levels:
-# Very easy: Min MC - 80% 4th, 10% 2nd, and 10% 3rd
-# Easy: Random - 25 % win rate
-# Medium: 5/14 Max MC and 9/14 Random - 50% first, 18% second, 16% third and fourth (in theory)
-# Hard: 17/27 Max MC and 10/27 Heart AI - 75% first, 13.5% second, 7.7% third, 3.7% last (in theory)
-# Very Hard: Max MC - 95 % win rate 5% second place
