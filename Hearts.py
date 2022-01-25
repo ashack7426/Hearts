@@ -170,15 +170,13 @@ def chooseSettings():
 def playGame():
     board = chooseSettings()
     play = True
-
     pygame.init()
     win = pygame.display.set_mode([SIZE, SIZE])
     win.fill(WHITE)
     pygame.display.set_caption('Hearts')
-    pygame.display.update()
-    pygame.display.flip()
 
     while play:
+        pygame.display.update()
         b = copy.deepcopy(board)
 
         while not b.gameOver():
@@ -419,7 +417,12 @@ def playGame():
             random.shuffle(board.getDeck())
 
 
-playGame()
+def main():
+    playGame()
+
+
+if __name__ == "__main__":
+    main()
 
 
 # Tests

@@ -86,7 +86,12 @@ def PlayWithMonteCarlo(num_of_games, max, player_num):
     display_rankings(ranks, num_of_games)
 
 
-PlayWithMonteCarlo(10, 1, 1)
+def main():
+    PlayWithMonteCarlo(10, 1, 1)
+
+
+if __name__ == "__main__":
+    main()
 
 
 # Last things

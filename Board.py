@@ -920,7 +920,9 @@ class Board:
         pygame.display.flip()
 
     def showBoard(self, screen):
-        pass
+        screen.fill(WHITE)
+
+        pygame.display.update()
 
     def showGame(self):
         first_player = self.getPlayerTurn()

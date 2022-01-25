@@ -82,7 +82,12 @@ def playGamewithAI(num_of_games):
     display_rankings(ranks, num_of_games)
 
 
-playGamewithAI(100)
+def main():
+    playGamewithAI(100)
+
+
+if __name__ == "__main__":
+    main()
 
 """ 
 def get13C5():

@@ -89,35 +89,6 @@ class PassEnv(Env):
         return self.state
 
 
-env = PassEnv()
-
-print(env.action_space.sample())
-print(env.observation_space.sample())
-
-episodes = 10
-
-for ep in range(1, episodes + 1):
-    state = env.reset()
-    done = False
-    score = 0
-    final_score = 0
-
-    while not done:
-        action = env.action_space.sample()
-        n_state, reward, done, info = env.step(action)
-        score += reward
-        final_score = reward
-
-    print('Episode: {} Score {} Final Score {} '.format(ep, score, final_score))
-
-
-states = env.observation_space.shape
-actions = env.action_space.n
-
-print(states)
-print(actions)
-
-
 def build_model(actions):
     model = Sequential()
     model.add(Dense(24, activation='relu', input_shape=(1, 5)))
@@ -125,10 +96,6 @@ def build_model(actions):
     model.add(Dense(actions, activation='linear'))
     model.add(Flatten(input_shape=(1, 1, 13)))
     return model
-
-
-passModel = build_model(actions)
-passModel.summary()
 
 
 def build_agent(model, actions):
@@ -139,16 +106,50 @@ def build_agent(model, actions):
     return dqn
 
 
-dqn = build_agent(passModel, actions)
-dqn.compile(Adam(lr=1e-3), metrics=['mae'])
+def main():
+    env = PassEnv()
 
-dqn.fit(env, nb_steps=100000, visualize=False,
-        verbose=1)
-scores = dqn.test(env, nb_episodes=100, visualize=False)
-print(np.mean(scores.history['episode_reward']))
+    print(env.action_space.sample())
+    print(env.observation_space.sample())
+
+    episodes = 10
+
+    for ep in range(1, episodes + 1):
+        state = env.reset()
+        done = False
+        score = 0
+        final_score = 0
+
+        while not done:
+            action = env.action_space.sample()
+            n_state, reward, done, info = env.step(action)
+            score += reward
+            final_score = reward
+
+        print('Episode: {} Score {} Final Score {} '.format(ep, score, final_score))
+
+    states = env.observation_space.shape
+    actions = env.action_space.n
+
+    print(states)
+    print(actions)
+
+    passModel = build_model(actions)
+    passModel.summary()
+
+    dqn = build_agent(passModel, actions)
+    dqn.compile(Adam(lr=1e-3), metrics=['mae'])
+
+    dqn.fit(env, nb_steps=100000, visualize=False,
+            verbose=1)
+    scores = dqn.test(env, nb_episodes=100, visualize=False)
+    print(np.mean(scores.history['episode_reward']))
+
+    passModel.save('passModel', overwrite=True)
+    state = env.observation_space.sample().reshape((1, 1, 5))
+    print(state)
+    print(passModel.predict(state))
 
 
-passModel.save('passModel', overwrite=True)
-state = env.observation_space.sample().reshape((1, 1, 5))
-print(state)
-print(passModel.predict(state))
+if __name__ == "__main__":
+    main()
