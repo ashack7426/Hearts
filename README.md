@@ -35,6 +35,12 @@ Max MC - 95 % win rate 5% second place
 <br />
 
 
+
+
+
+
+
+
 Computer Levels:
 
 Very easy: Min MC - 80% 4th, 10% 2nd, and 10% 3rd
@@ -46,3 +52,7 @@ Medium: 5/14 Max MC and 9/14 Random - 50% first, 18% second, 16% third and fourt
 Hard: 17/27 Max MC and 10/27 Heart AI - 75% first, 13.5% second, 7.7% third, 3.7% last (in theory)
 
 Very Hard: Max MC - 95 % win rate 5% second place
+
+
+
+https://user-images.githubusercontent.com/24733269/160322742-82abf673-fd4e-4983-b0c0-bfe3882c0ce0.mov
