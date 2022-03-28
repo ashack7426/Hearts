@@ -1,4 +1,5 @@
 
+from distutils.command.build_scripts import first_line_re
 from matplotlib.pyplot import show
 from Card import Card
 from Player import Player
@@ -7,6 +8,8 @@ import numpy as np
 from math import comb, fabs
 from constants import *
 import copy
+import pygame, sys
+from pygame.locals import *
 
 
 class Board:
@@ -713,7 +716,7 @@ class Board:
             if not p.show():
                 for c in p.getHand():
                     c.hide()
-                    pass
+                    
 
    # Action space & _action to number
     # Need a mapping of (x,y,z) such that 0 <= x < y < z <= 12
@@ -820,7 +823,7 @@ class Board:
                     if c.getSuit() == self.maxCard.getSuit():
                         c.reveal()
                         p.removeCardFromHand(c, -2)
-                        c.hide()
+                      
 
                 unknowns = 0
                 no_suits = 0
@@ -892,13 +895,92 @@ class Board:
             self.__playerTurn = (self.__playerTurn + 1) % 4
 
         return False
+    
+
+    def gameGui(self):
+        pygame.init()
+
+        #make a rectangle with light green background (board)
+        DISPLAY=pygame.display.set_mode((1500,800))
+        GREEN=(56,93,56)
+        DISPLAY.fill(GREEN)
+      
+
+        #make a white rectangle whith text in the center (card)
+        font = pygame.font.SysFont('Arial', 25)
+
+        x = 120
+        y = 10
+        first_player = self.getPlayerTurn()
+        pp = self.getPlayers()[first_player]
+        DISPLAY.blit(font.render('P' + str(pp.getNumber()) + ": ", True, (255,255,255)), (70,y + 20))
+        for c in pp.getHand():
+            c.draw(DISPLAY, x,y)
+            x += 60
+
+        
+        y += 100
+        x = 120
+        second_player = (first_player + 1) % 4
+        pp = self.getPlayers()[second_player]
+        DISPLAY.blit(font.render('P' + str(pp.getNumber()) + ": ", True, (255,255,255)), (70,y + 20))
+        for c in pp.getHand():
+            c.draw(DISPLAY, x,y)
+            x += 60
+     
+        
+        y += 100
+        x = 120
+        third_player = (second_player + 1) % 4
+        pp = self.getPlayers()[third_player]
+        DISPLAY.blit(font.render('P' + str(pp.getNumber()) + ": ", True, (255,255,255)), (70,y + 20))
+        for c in pp.getHand():
+            c.draw(DISPLAY, x,y)
+            x += 60
+
+        
+        y += 100
+        x = 120
+        fourth_player = (third_player + 1) % 4
+        pp = self.getPlayers()[fourth_player]
+        DISPLAY.blit(font.render('P' + str(pp.getNumber()) + ": ", True, (255,255,255)), (70,y + 20))
+        for c in pp.getHand():
+            c.draw(DISPLAY, x,y)
+            x += 60
+
+        height = 600
+        rankedPlayers = sorted(self.getPlayers())
+        for pp in rankedPlayers:
+            DISPLAY.blit(font.render('P' + str(pp.getNumber()) + ": " 
+        + str(pp.getWonHand()) + " (" + str(pp.getCurrentScore() + pp.getScore()) 
+        + ")", True, (255,255,255)), (80,height))
+            height += 40
+
+       
+
+        #in the center of the screen their is the max card and top of pile card and player with max Card
+        if(self.maxCard):
+            for i in range(len(self.__pile)):
+                c = self.__pile[i]
+                if c == self.maxCard:
+                   playerNum = (self.__playerTurn + i + 1) % 4 + 1
+
+            text = "Top of Pile: " + str(self.__pile[-1]) + " Max Card: " + str(self.maxCard) + ", P" + str(playerNum)
+        else:
+            text = "Top of Pile: []"  " Max Card: []"
+
+
+        DISPLAY.blit(font.render(text, True, (255,255,255)), (300,500))
+
+
+        pygame.display.update()
+       
 
     def showGame(self):
         first_player = self.getPlayerTurn()
         pp = self.getPlayers()[first_player]
 
         # Show the cards in the other players hand
-        pass_num = self.__passNum
         passArr = [1, -1, 2, 0]
         cards = []
 
@@ -911,6 +993,7 @@ class Board:
                     for cc in p.getHand():
                         if cc in cards:
                             cc.reveal()
+                    break
 
         # 4 options
 
@@ -923,14 +1006,16 @@ class Board:
             turn = (first_player + i) % 4
             p = self.getPlayers()[turn]
 
-            if p.getType() == 3:  # Unknown Player
-                for c in p.getHand():
-                    if c not in cards:
-                        c.hide()
-
             # show my cards if show
             if p.show() or (pp == p and p.getType() != 3):  # if show card or pp is the current player
                 for c in pp.getHand():
                     c.reveal()
+            else:
+                for c in p.getHand():
+                    if c not in cards:
+                        c.hide()
+            
 
             print(str(p))
+        
+        self.gameGui()

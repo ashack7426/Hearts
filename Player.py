@@ -250,7 +250,7 @@ class Player:
         return txt
 
     def __eq__(self, other):
-        return self.__score == other.__score and self.__number == other.__number
+        return self.__number == other.__number
 
     def __lt__(self, other):
-        return self.__score < other.__score
+        return self.__score + self.getCurrentScore() < other.__score +  other.getCurrentScore()

@@ -1,6 +1,7 @@
 
 from constants import *
-
+import pygame, sys
+from pygame.locals import *
 
 class Card:
     def __init__(self, suit, rank):
@@ -74,3 +75,22 @@ class Card:
 
     def __lt__(self, other):
         return self._getRankIndex() < other._getRankIndex()
+    
+    def draw(self,win,x,y):
+        WHITE = (255,255,255)
+        BLUE = (0,128,255)
+        font = pygame.font.SysFont('Arial', 25)
+
+        if(self.__show):
+            pygame.draw.rect(win,WHITE,(x,y,50,80))
+            color = (255,0,0)
+
+            if(self.__suit == 'S' or self.__suit == 'C'):
+                color = (0,0,0)
+            win.blit(font.render(str(self), True, color), (x + 4,y + 20))
+        else:
+            pygame.draw.rect(win,BLUE,(x,y,50,80))
+            win.blit(font.render(str(self), True, WHITE), (x + 4,y + 20))
+        
+
+

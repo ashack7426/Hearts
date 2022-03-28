@@ -177,7 +177,6 @@ def playGame():
             b.startRound()
             if b.startOfRound():
                 cards = []
-                b.showGame()
                 # Ask to change the pass
                 print('What is the pass of this round?')
                 passing = int(
@@ -385,6 +384,7 @@ def playGame():
                     round_over = b.playCard(a)
 
             if not b.gameOver():
+                b.showGame()
                 for i in range(4):
                     p = b.getPlayers()[i]
                     hand = copy.deepcopy(board.getPlayers()[i].getHand())
