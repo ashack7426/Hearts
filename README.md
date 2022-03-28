@@ -6,6 +6,10 @@ For rules you can look at this link: https://bicyclecards.com/how-to-play/hearts
 
 I have added multiple bots so one can try to play against a computer as well.
 
+
+https://user-images.githubusercontent.com/24733269/160322742-82abf673-fd4e-4983-b0c0-bfe3882c0ce0.mov
+
+
 <br />
 
 
@@ -36,11 +40,6 @@ Max MC - 95 % win rate 5% second place
 
 
 
-
-
-
-
-
 Computer Levels:
 
 Very easy: Min MC - 80% 4th, 10% 2nd, and 10% 3rd
@@ -54,5 +53,3 @@ Hard: 17/27 Max MC and 10/27 Heart AI - 75% first, 13.5% second, 7.7% third, 3.7
 Very Hard: Max MC - 95 % win rate 5% second place
 
 
-
-https://user-images.githubusercontent.com/24733269/160322742-82abf673-fd4e-4983-b0c0-bfe3882c0ce0.mov
